@@ -135,7 +135,7 @@ Describe "$ModuleName ScriptAnalyzerErrors" -Tag 'Compliance' {
     }
 }
 Describe "$ModuleName Tests missing" -Tag 'Tests' {
-    $functions = Get-ChildItem "$ModulePath\functions\" -Recurse -Include *.ps1
+    $functions = Get-ChildItem "$ModulePath\public\" -Recurse -Include *.ps1
     Context "Every function should have tests" {
         foreach ($f in $functions) {
             It "$($f.basename) has a tests.ps1 file" {
@@ -143,7 +143,7 @@ Describe "$ModuleName Tests missing" -Tag 'Tests' {
             }
             If (Test-Path "tests\$($f.basename).tests.ps1") {
                 It "$($f.basename) has validate parameters unit test" {
-                    "tests\$($f.basename).tests.ps1" | should FileContentMatch 'Context "Validate parameters"'
+                    "tests\$($f.basename).tests.ps1" | Should -FileContentMatch 'Context "Validate parameters"'
                 }
             }
         }

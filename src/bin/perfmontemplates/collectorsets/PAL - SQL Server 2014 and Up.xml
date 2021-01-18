@@ -67,7 +67,7 @@
     <Counter>\Process(*)\IO Other Operations/sec</Counter>
     <Counter>\Process(*)\IO Read Operations/sec</Counter>
     <Counter>\Process(*)\IO Write Operations/sec</Counter>
-    <Counter>\Process(*)\Private Bytes</Counter>
+    <Counter>\Process(*)\internal Bytes</Counter>
     <Counter>\Process(*)\Thread Count</Counter>
     <Counter>\Process(*)\Virtual Bytes</Counter>
     <Counter>\Process(*)\Working Set</Counter>

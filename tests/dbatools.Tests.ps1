@@ -39,7 +39,7 @@ Describe "$ModuleName style" -Tag 'Compliance' {
     - UTF8 without BOM is what is going to be used in PS Core, so we adopt this standard for dbatools
     #>
     $AllFiles = Get-ChildItem -Path $ModulePath -File -Recurse -Filter '*.ps*1' | Where-Object Name -ne 'allcommands.ps1'
-    $AllFunctionFiles = Get-ChildItem -Path "$ModulePath\public", "$ModulePath\private\functions"-Filter '*.ps*1'
+    $AllFunctionFiles = Get-ChildItem -Path "$ModulePath\functions", "$ModulePath\internal\functions"-Filter '*.ps*1'
     Context "formatting" {
         $maxConcurrentJobs = $env:NUMBER_OF_PROCESSORS
         $whatever = Split-ArrayInParts -array $AllFunctionFiles -parts $maxConcurrentJobs
@@ -122,8 +122,8 @@ Describe "$ModuleName style" -Tag 'Compliance' {
 }
 Describe "$ModuleName ScriptAnalyzerErrors" -Tag 'Compliance' {
     $ScriptAnalyzerErrors = @()
-    $ScriptAnalyzerErrors += Invoke-ScriptAnalyzer -Path "$ModulePath\public" -Severity Error
-    $ScriptAnalyzerErrors += Invoke-ScriptAnalyzer -Path "$ModulePath\private\functions" -Severity Error
+    $ScriptAnalyzerErrors += Invoke-ScriptAnalyzer -Path "$ModulePath\functions" -Severity Error
+    $ScriptAnalyzerErrors += Invoke-ScriptAnalyzer -Path "$ModulePath\internal\functions" -Severity Error
     Context "Errors" {
         if ($ScriptAnalyzerErrors.Count -gt 0) {
             foreach ($err in $ScriptAnalyzerErrors) {
@@ -135,7 +135,7 @@ Describe "$ModuleName ScriptAnalyzerErrors" -Tag 'Compliance' {
     }
 }
 Describe "$ModuleName Tests missing" -Tag 'Tests' {
-    $functions = Get-ChildItem "$ModulePath\public\" -Recurse -Include *.ps1
+    $functions = Get-ChildItem "$ModulePath\functions\" -Recurse -Include *.ps1
     Context "Every function should have tests" {
         foreach ($f in $functions) {
             It "$($f.basename) has a tests.ps1 file" {
@@ -173,7 +173,7 @@ Describe "$ModuleName Function Name" -Tag 'Compliance' {
 
         }
     }
-    foreach ($item in (Get-ChildItem -Path "$ModulePath\private\functions" -Filter '*.ps*1' | Where-Object BaseName -ne 'Where-DbaObject')) {
+    foreach ($item in (Get-ChildItem -Path "$ModulePath\internal\functions" -Filter '*.ps*1' | Where-Object BaseName -ne 'Where-DbaObject')) {
         $Tokens = $null
         $Errors = $null
         $Ast = [System.Management.Automation.Language.Parser]::ParseFile($item.FullName, [ref]$Tokens, [ref]$Errors)

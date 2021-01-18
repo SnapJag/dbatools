@@ -76,7 +76,7 @@ function Invoke-Parallel {
                     Computer=$computer;
                     Available=1;
                     Kodak=$(
-                        if((test-path "\\$computer\c$\users\public\desktop\Kodak Direct View Pacs.url") -or (test-path "\\$computer\c$\documents and settings\all users\desktop\Kodak Direct View Pacs.url") ){"1"}else{"0"}
+                        if((test-path "\\$computer\c$\users\functions\desktop\Kodak Direct View Pacs.url") -or (test-path "\\$computer\c$\documents and settings\all users\desktop\Kodak Direct View Pacs.url") ){"1"}else{"0"}
                     )
                 }
             }
@@ -91,7 +91,7 @@ function Invoke-Parallel {
             $object
 
     .EXAMPLE
-        Invoke-Parallel -scriptfile C:\public\Test-ForPacs.ps1 -inputobject $(get-content C:\pcs.txt) -runspaceTimeout 10 -throttle 10
+        Invoke-Parallel -scriptfile C:\functions\Test-ForPacs.ps1 -inputobject $(get-content C:\pcs.txt) -runspaceTimeout 10 -throttle 10
 
             Pulls list of PCs from C:\pcs.txt,
             Runs Test-ForPacs against each
@@ -99,7 +99,7 @@ function Invoke-Parallel {
             Only run 10 threads at a time
 
     .EXAMPLE
-        Invoke-Parallel -scriptfile C:\public\Test-ForPacs.ps1 -inputobject c-is-ts-91, c-is-ts-95
+        Invoke-Parallel -scriptfile C:\functions\Test-ForPacs.ps1 -inputobject c-is-ts-91, c-is-ts-95
 
             Runs against c-is-ts-91, c-is-ts-95 (-computername)
             Runs Test-ForPacs against each

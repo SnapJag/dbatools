@@ -27,7 +27,7 @@ function Invoke-TagCommand ([string]$Tag, [string]$Keyword) {
     $tagsRex = ([regex]'(?m)^[\s]{0,15}Tags:(.*)$')
     $modulepath = (Get-Module -Name dbatools).Path
     $directory = Split-Path $modulepath
-    $basedir = "$directory\public\"
+    $basedir = "$directory\functions\"
     Import-Module $modulepath -force
     $allfiles = Get-ChildItem $basedir
     foreach ($f in $allfiles) {

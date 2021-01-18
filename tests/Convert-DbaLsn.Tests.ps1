@@ -4,7 +4,7 @@ Write-Host -Object "Running $PSCommandPath" -ForegroundColor Cyan
 
 # required to support internal functions that utilize Write-Message
 Import-Module ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\bin', 'dbatools.dll'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions', 'Convert-DbaLsn.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions', 'Convert-DbaLsn.ps1'))
 
 Describe "$CommandName Unit Tests" -Tag 'UnitTests' {
     Context "Validate parameters" {

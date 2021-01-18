@@ -206,7 +206,7 @@ Theoretically, there's a minor cuncurrency collision risk with that, but since t
 a little import time loss if that happens ...
 #>
 if ((-not ('Sqlcollaborative.Dbatools.dbaSystem.DebugHost' -as [type])) -or (-not [Sqlcollaborative.Dbatools.dbaSystem.SystemHost]::ModuleBase)) {
-    . $script:psScriptRoot\private\scripts\libraryimport.ps1
+    . $script:psScriptRoot\internal\scripts\libraryimport.ps1
     Write-ImportTime -Text "Starting import SMO libraries"
 }
 
@@ -230,23 +230,23 @@ Write-ImportTime -Text "Loading dbatools library"
 
 if ($script:multiFileImport) {
     # All internal functions privately available within the toolset
-    foreach ($file in (Get-ChildItem -Path "$psScriptRoot\private\functions\" -Recurse -Filter *.ps1)) {
+    foreach ($file in (Get-ChildItem -Path "$psScriptRoot\internal\functions\" -Recurse -Filter *.ps1)) {
         . $file.FullName
     }
     Write-ImportTime -Text "Loading Internal Commands"
 
-    #    . $psScriptRoot\private\scripts\cmdlets.ps1
+    #    . $psScriptRoot\internal\scripts\cmdlets.ps1
 
     Write-ImportTime -Text "Registering cmdlets"
 
     # All exported functions
-    foreach ($file in (Get-ChildItem -Path "$script:PSModuleRoot\public\" -Recurse -Filter *.ps1)) {
+    foreach ($file in (Get-ChildItem -Path "$script:PSModuleRoot\functions\" -Recurse -Filter *.ps1)) {
         . $file.FullName
     }
     Write-ImportTime -Text "Loading Public Commands"
 
 } else {
-    #    . $psScriptRoot\private\scripts\cmdlets.ps1
+    #    . $psScriptRoot\internal\scripts\cmdlets.ps1
 
     . $psScriptRoot\allcommands.ps1
     #. (Resolve-Path -Path "$script:PSModuleRoot\allcommands.ps1")
@@ -257,7 +257,7 @@ if ($script:multiFileImport) {
 
 # Load configuration system
 # Should always go after library and path setting
-. $psScriptRoot\private\configurations\configuration.ps1
+. $psScriptRoot\internal\configurations\configuration.ps1
 Write-ImportTime -Text "Configuration System"
 
 # Resolving the path was causing trouble when it didn't exist yet
@@ -276,27 +276,27 @@ foreach ($file in (Get-ChildItem -Path "$script:PSScriptRoot\optional" -Filter *
 Write-ImportTime -Text "Loading Optional Commands"
 
 # Process TEPP parameters
-. $psScriptRoot\private\scripts\insertTepp.ps1
+. $psScriptRoot\internal\scripts\insertTepp.ps1
 Write-ImportTime -Text "Loading TEPP"
 
 
 # Process transforms
-. $psScriptRoot\private\scripts\message-transforms.ps1
+. $psScriptRoot\internal\scripts\message-transforms.ps1
 Write-ImportTime -Text "Loading Message Transforms"
 
 # Load scripts that must be individually run at the end #
 #-------------------------------------------------------#
 
 # Start the logging system (requires the configuration system up and running)
-. $psScriptRoot\private\scripts\logfilescript.ps1
+. $psScriptRoot\internal\scripts\logfilescript.ps1
 Write-ImportTime -Text "Script: Logging"
 
 # Start the tepp asynchronous update system (requires the configuration system up and running)
-. $psScriptRoot\private\scripts\updateTeppAsync.ps1
+. $psScriptRoot\internal\scripts\updateTeppAsync.ps1
 Write-ImportTime -Text "Script: Asynchronous TEPP Cache"
 
 # Start the maintenance system (requires pretty much everything else already up and running)
-. $psScriptRoot\private\scripts\dbatools-maintenance.ps1
+. $psScriptRoot\internal\scripts\dbatools-maintenance.ps1
 Write-ImportTime -Text "Script: Maintenance"
 
 #region Aliases

@@ -4,12 +4,12 @@ Write-Host -Object "Running $PSCommandpath" -ForegroundColor Cyan
 
 # required to support internal functions that utilize Write-Message
 Import-Module ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\bin', 'dbatools.dll'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions\message', 'Convert-DbaMessageTarget.ps1'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions\message', 'Convert-DbaMessageException.ps1'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions\flowcontrol', 'Stop-Function.ps1'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions', 'Connect-SqlInstance.ps1'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions', 'Start-DbccCheck.ps1'))
-. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\private\functions', 'Invoke-DbaDbCorruption.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions\message', 'Convert-DbaMessageTarget.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions\message', 'Convert-DbaMessageException.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions\flowcontrol', 'Stop-Function.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions', 'Connect-SqlInstance.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions', 'Start-DbccCheck.ps1'))
+. ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\internal\functions', 'Invoke-DbaDbCorruption.ps1'))
 
 Describe "$commandName Unit Tests" -Tags "UnitTests" {
     Context "Validate parameters" {

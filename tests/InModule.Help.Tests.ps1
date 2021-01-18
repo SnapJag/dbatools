@@ -32,7 +32,7 @@ if ($env:appveyor) {
 if ($SkipHelpTest) { return }
 . "$PSScriptRoot\InModule.Help.Exceptions.ps1"
 
-$includedNames = (Get-ChildItem ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\public')) | Where-Object Name -like "*.ps1" ).BaseName
+$includedNames = (Get-ChildItem ([IO.Path]::Combine(([string]$PSScriptRoot).Trim("tests"), 'src\functions')) | Where-Object Name -like "*.ps1" ).BaseName
 $commands = Get-Command -Module (Get-Module dbatools) -CommandType Cmdlet, Function, Workflow | Where-Object Name -in $includedNames
 
 ## When testing help, remember that help is cached at the beginning of each session.
